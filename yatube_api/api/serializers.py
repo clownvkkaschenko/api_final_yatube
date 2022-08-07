@@ -21,7 +21,7 @@ class FollowSerializer(serializers.ModelSerializer):
                                              queryset=User.objects.all())
 
     def validate_following(self, following):
-        if following == self.context.get('request').user:
+        if following == self.context['request'].user:
             raise serializers.ValidationError(
                 "You can't subscribe to yourself")
         return following
@@ -31,7 +31,8 @@ class FollowSerializer(serializers.ModelSerializer):
         fields = ('user', 'following')
         validators = [
             UniqueTogetherValidator(
-                queryset=model.objects.all(), fields=['user', 'following'],
+                queryset=model.objects.all(),
+                fields=('user', 'following'),
                 message='You are already subscribed to this author'
             )
         ]
