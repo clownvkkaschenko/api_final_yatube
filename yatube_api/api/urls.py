@@ -8,11 +8,11 @@ from .views import CommentViewSet, FollowViewSet, GroupViewSet, PostViewSet
 app_name = 'api'
 
 jwt_patterns = [
-    path('jwt/create/',
+    path('create/',
          TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('jwt/refresh/',
+    path('refresh/',
          TokenRefreshView.as_view(), name='token_refresh'),
-    path('jwt/verify/',
+    path('verify/',
          TokenVerifyView.as_view(), name='token_verify')
 ]
 
@@ -26,5 +26,5 @@ v1_router.register(r'posts/(?P<post_id>\d+)/comments',
 
 urlpatterns = [
     path('v1/', include(v1_router.urls)),
-    path('v1/', include(jwt_patterns))
+    path('v1/jwt/', include(jwt_patterns))
 ]

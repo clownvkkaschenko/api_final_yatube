@@ -1,21 +1,90 @@
 # API для YaTube
 
 ### Описание:
-API для проекта YaTube позволяет пользователям соверашть разные действия на сайте, при этом не посещая его
+API для проекта YaTube позволяет пользователям соверашть разные действия на сайте, при этом не посещая его.
 
 ### С помощью API можно:
- - Смотреть, писать, редактировать и удалять посты
- - Комментировать посты, а так-же читать, редактировать и удалять комментарии
- - Создавать сообщества и просматривать информацию о них
- - Подписываться на авторов
+ - Смотреть, писать, редактировать и удалять посты.
+ - Комментировать посты, а так-же читать, редактировать и удалять комментарии.
+ - Создавать сообщества и просматривать информацию о них.
+ - Подписываться на авторов.
 
 ### Примеры запросов к API:
-- /api/v1/posts/ - Получить список публикаций или создать новую публикацию
-- /api/v1/posts/{id}/ - Получить, изменить или удалить пост по его id
-- /api/v1/posts/{post_id}/comments/ - Получить все комментарии или написать новый комментарий к определённому посту
-- /api/v1/posts/{post_id}/comments/{id}/ - Получить, изменить или удалить определённый комментарий к публикации по id
-- /api/v1/follow/ - Возвращает все подписки пользователя, сделавшего запрос
-- /api/v1/jwt/create/ - Получение JWT-токена(в теле запроса нужно передать имя и пароль пользователя)
+##### Получение публикации:
+- Request: GET http://127.0.0.1:8000/api/v1/posts/3/
+- Response samples:
+    ```
+    {
+        "id": 3,
+        "author": "Shoyo",
+        "text": "Third post",
+        "pub_date": "05.08.2022 10:35:53",
+        "image": null,
+        "group": null
+    }
+    ```
+##### Список сообществ:
+- Request: GET http://127.0.0.1:8000/api/v1/groups/
+- Response samples:
+    ```
+    [
+        {
+            "id": 1,
+            "title": "Learning",
+            "slug": "learning",
+            "description": "A group where you can ask questions about learning"
+        }
+    ]
+    ```
+##### Добавление комментария:
+- Request: POST http://127.0.0.1:8000/api/v1/posts/3/comments/
+- Request samples:
+     ```
+    {
+        "text": "Adding a comment via the API"
+    }
+     ```
+- Response samples:
+    ```
+    {
+        "id": 1,
+        "author": "Shoyo",
+        "text": "Adding a comment via the API",
+        "created": "05.08.2022 10:36:31",
+        "post": 3
+    }
+    ```
+##### Подписаться на пользователя:
+- Request: POST http://127.0.0.1:8000/api/v1/follow/
+- Request samples:
+    ```
+    {
+        "following": "Tobio"
+    }
+    ```
+- Response samples:
+    ```
+    {
+        "user": "Shoyo",
+        "following": "Tobio"
+    }
+    ```
+##### Получение JWT-токена:
+- Request: POST http://127.0.0.1:8000/api/v1/jwt/create/
+- Request samples:
+    ```
+    {
+        "username": "Shoyo",
+        "password": "string"
+    }
+    ```
+- Response samples:
+    ```
+    {
+        "refresh": "Data to refresh the token",
+        "access": "Token"
+    }
+    ```
 
 ### Как запустить проект:
 
